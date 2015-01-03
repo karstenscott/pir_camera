@@ -42,8 +42,9 @@ try:
   print "  Ready"     
     
   # Loop until users quits with CTRL-C
-i = 0  # set i to 0 outside the while
-while True :    
+  # Set i to 0 outside the while
+	i = 0  
+	while True :    
     # Read PIR state
     Current_State = GPIO.input(GPIO_PIR)    
     if Current_State==1 and Previous_State==0:
