@@ -1,13 +1,11 @@
 #!/usr/bin/python
-#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-#|R|a|s|p|b|e|r|r|y|P|i|-|S|p|y|.|c|o|.|u|k|
-#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #
 # pir_1.py
 # Detect movement using a PIR module
 #
 # Author : Matt Hawkins
-# Date   : 21/01/2013
+# Edited by Karsten Scott
+# Date   : 4/01/2015
 
 # Import required Python libraries
 import RPi.GPIO as GPIO
@@ -21,7 +19,7 @@ GPIO.setmode(GPIO.BCM)
 # Define GPIO to use on Pi
 GPIO_PIR = 7
 
-print "Wilbur Cam! (CTRL-C to exit)"
+print "Pir Cam Started... (CTRL-C to exit)"
 
 # Set pin as input
 GPIO.setup(GPIO_PIR,GPIO.IN)      # Echo
@@ -37,23 +35,23 @@ try:
 
   # Loop until PIR output is 0
   while GPIO.input(GPIO_PIR)==1:
-    Current_State  = 0    
+    Current_State  = 0
 
-  print "  Ready"     
-    
+  print "  Ready"
+
   # Loop until users quits with CTRL-C
   # Set i to 0 outside the while
-  i = 0  
-  while True :    
+  i = 0
+  while True :
     # Read PIR state
-    Current_State = GPIO.input(GPIO_PIR)    
+    Current_State = GPIO.input(GPIO_PIR)
     if Current_State==1 and Previous_State==0:
       # PIR is triggered
       print "  Motion detected!"
       # Record previous state
       Previous_State=1
       # Camera begins to record
-      camera.resolution = (1360, 768)
+      camera.resolution = (1024, 768)
       camera.start_recording('pivid{}.h264'.format(i)) # pass i to str.format
       print('Captured pivid{}.264'.format(i))
       i += 1 # increase i
@@ -63,11 +61,11 @@ try:
       # PIR has returned to ready state
       print "  Ready"
       Previous_State=0
-      
+
     # Wait for 10 milliseconds
     time.sleep(0.01)
-      
+
 except KeyboardInterrupt:
-  print "  Quit" 
+  print "  Quit"
   # Reset GPIO settings
   GPIO.cleanup()
